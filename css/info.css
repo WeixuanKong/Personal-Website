@@ -1,0 +1,13 @@
+.info span{
+    color: grey;
+}
+
+#Info{
+    padding: 10%;
+    border: 1px solid black;
+}
+#Interests{
+    border: 1px solid black;
+    text-align: center;
+    padding: 20%;
+}

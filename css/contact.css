@@ -1,0 +1,19 @@
+
+
+#contact{
+    position:absolute;
+    top:30%;
+    border:1px solid black;
+    width: 60%;
+    height: 50%;
+    margin-right: 20%;
+    text-align: center;
+    line-height: 1.5;
+}
+#contact div{
+    padding: 30%;
+}
+/*make the span part such as "Mail:" grey*/
+span{
+    color: grey;
+}
