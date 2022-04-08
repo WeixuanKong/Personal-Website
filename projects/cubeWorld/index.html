@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Weixuan Kong Assignment2</title>
+    <style>
+        body { margin: 0; }
+    </style>
+</head>
+<body>
+<script src="https://threejs.org/build/three.min.js"></script>
+<script>
+    function playground(){
+
+
+        //init part
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera( 75, window.outerWidth / window.outerHeight, 1, 1000 );
+
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.outerWidth, window.outerHeight );
+        document.body.appendChild( renderer.domElement );
+
+        //the world(group)
+        const world = new THREE.Group();
+
+        //plane as a ground
+        const planeGeometry = new THREE.PlaneGeometry( 100, 100, 10, 10);
+        const planeMaterial = new THREE.MeshBasicMaterial( {color: 0x964B00, side: THREE.DoubleSide, wireframe:false} );
+        const ground = new THREE.Mesh(planeGeometry, planeMaterial );
+
+        //terrain(by rise the few points of the plane
+        const vertices = planeGeometry.attributes.position.array;
+        for ( let i = 2; i < vertices.length; i+=3) {
+
+             if (Math.random() < 0.1){
+                vertices[i] += Math.random()*3;
+                vertices[i+3] += Math.random();
+                vertices[i-3] += Math.random();
+
+             }
+        }
+        ground.geometry.verticesNeedUpdate=true;
+        ground.position.set(0,0,0.1);
+        world.add( ground );
+
+        //skybox
+        const skyboxGeometry = new THREE.BoxGeometry(100, 100, 100);
+        //add texture
+
+        const skyboxMaterials = [
+            new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load("horizon1.jpg") , side: THREE.BackSide}),
+            new THREE.MeshBasicMaterial({map:  new THREE.TextureLoader().load("horizon2.jpg"), side: THREE.BackSide}),
+            new THREE.MeshBasicMaterial({map:  new THREE.TextureLoader().load("horizon3.jpg"), side: THREE.BackSide}),
+            new THREE.MeshBasicMaterial({map:  new THREE.TextureLoader().load("horizon4.jpg"), side: THREE.BackSide}),
+            new THREE.MeshBasicMaterial({map:  new THREE.TextureLoader().load("sky.jpg"), side: THREE.BackSide}),
+            new THREE.MeshBasicMaterial({map:  new THREE.TextureLoader().load("ground.jpg"), side: THREE.BackSide}),
+
+        ]
+        const skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterials);
+        skybox.position.set(0, 0, 50);
+        skybox.opacity = 0.0;
+        world.add(skybox);
+
+
+        //make a cone based tree
+        const cylinderGeometry = new THREE.CylinderGeometry(1,1,3,100);
+        const cylinderMaterial = new THREE.MeshBasicMaterial( {color: 0x654321} );
+        const trunk = new THREE.Mesh( cylinderGeometry, cylinderMaterial );
+        trunk.rotateX(1.5);
+        trunk.position.set(0, 0, 1);
+        trunk.scale.set(0.1, 0.5, 0.5);
+
+        const coneGeometry = new THREE.ConeGeometry( 2, 3, 4 );
+        const coneMaterial = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+        const crown = new THREE.Mesh( coneGeometry, coneMaterial );
+        crown.rotateX(1.5);
+        crown.position.set(0, 0, 2);
+        crown.scale.set(0.5, 0.5, 0.5);
+        const tree1 = new THREE.Group();
+        tree1.add(trunk);
+        tree1.add(crown);
+
+        //a kind of square tree.
+        const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+        const leafMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00})
+        const squareLeaf = new THREE.Mesh(boxGeometry, leafMaterial);
+        squareLeaf.position.set(0, 0, 2);
+        const stem = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+        stem.rotateX(1.5);
+        stem.scale.set(0.3, 0.4, 0.3);
+        stem.position.set(0, 0 , 1);
+        const tree2 = new THREE.Group;
+        tree2.add(squareLeaf);
+        tree2.add(stem);
+
+
+
+
+        //random the tree type
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max);
+        }
+        function randomTree(){
+            if (Math.random() > 0.5){
+                return tree1;
+            }
+            else{
+                return tree2;
+            }
+        }
+        function generateTrees() {
+
+            for (let i = 0; i < 100; i ++){
+                const tree = randomTree().clone();
+                let randomPosX = getRandomInt(100) - 50;
+                tree.translateX(randomPosX);
+                let randomPosY = getRandomInt(100) - 50;
+                tree.translateY(randomPosY);
+                let randomZ = Math.random();
+                tree.scale.set(Math.random() + 0.5, Math.random() + 0.5,  randomZ+ 0.5);
+                tree.position.z = 1-randomZ;
+                world.add(tree);
+            }
+        }
+
+
+
+        generateTrees();
+
+        world.position.set(0,0,0);
+
+
+
+
+
+        //Define the object for the scene:
+        const particles = [] //array that will store the particles'
+        //var particles = new THREE.Geometry;
+        for (let p = 0; p<1000; p++) {
+            const particle = new THREE.Vector3(Math.random() * 100-50, Math.random() * 100-50, Math.random() * 100);
+            particles.push(particle);
+        }
+        let geometry = new THREE.BufferGeometry().setFromPoints( particles ) //sets up geometry
+        let particleMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+        let particleSystem = new THREE.Points(geometry, particleMaterial);
+        world.add(particleSystem);
+        scene.fog = new THREE.FogExp2( 0xd6d4cb, 0.0065);
+
+
+
+        scene.add(world);
+        camera.position.set( 0, 80, 20 );
+        camera.lookAt(0, 0, 21 );
+        function animate() {
+            world.rotation.z += 0.001;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+    }
+    playground();
+
+</script>
+</body>
+</html>

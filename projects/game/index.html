@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>Weixuan Kong Assignment one</title>
+	<style>
+		body {
+			margin: 0;
+
+		}
+	</style>
+</head>
+
+<body>
+	<div id = "instruction">Click button to start.</div>
+	Credit:<div id = "credit"></div></div>
+	<button id = "start" onclick="gameScene()">Start Game</button>
+	<script src="http://threejs.org/build/three.min.js"></script>
+	<script>
+		function gameScene(){
+			// codes go here !!!
+		document.getElementById("credit").textContent = 80000;
+		document.getElementById("instruction").textContent = "Press keyboard up/down/left/right arrow to move";
+		const scene = new THREE.Scene();
+		const renderer = new THREE.WebGLRenderer();
+		renderer.setSize(window.innerWidth*0.98, window.innerHeight*0.9);
+		document.body.appendChild(renderer.domElement);
+
+		const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+		camera.position.set(0, 0, 100);
+		camera.lookAt(0, 0, 0);
+
+
+		//create a green lineMaterial
+		const lineMaterial = new THREE.LineBasicMaterial({ color: 0x00FF00 });
+		const points = [];
+		//line
+		points.push(new THREE.Vector3(-40, -35, 0));
+		points.push(new THREE.Vector3(40, -35, 0));
+
+		const line_geometry = new THREE.BufferGeometry().setFromPoints(points);
+		const line = new THREE.Line(line_geometry, lineMaterial);
+		scene.add(line);
+
+		//from example, and adjusted few variables
+		//star (the points cloud)
+		const star = [] //array that wmaill store points defining the lines
+		//This creates new vertices of two lines by pushing its coordinate values to an internal array:
+
+		for (var i = 0; i < 15000; i++) {
+
+			var star1 = new THREE.Vector3();
+			star1.x = THREE.Math.randFloatSpread(2000);
+			star1.y = THREE.Math.randFloatSpread(2000);
+			star1.z = THREE.Math.randFloatSpread(2000);
+
+			star.push(star1);
+
+		}
+		let starsGeometry = new THREE.BufferGeometry().setFromPoints(star) //sets up geometry
+		var starsMaterial = new THREE.PointsMaterial({ size: Math.random() * (5 - 1) + 1, color: 0x888888 });//random its size
+
+		var starField = new THREE.Points(starsGeometry, starsMaterial);
+
+		scene.add(starField);
+		var sephereGeometry = new THREE.SphereGeometry(6, 30, 40);
+		//dim red sephere, as the background
+		var material = new THREE.MeshBasicMaterial({ color: 0xCC0000, wireframe: true });
+		var sphere = new THREE.Mesh(sephereGeometry, material);
+		scene.add(sphere);	
+
+		var box = new THREE.BoxGeometry(2, 2, 0);
+
+		//as the lives left at left bottom conor
+		var cube = new THREE.Mesh(box, lineMaterial);
+		cube.translateX(-36);
+		cube.translateY(-38);
+		cube.translateZ(0);
+
+		scene.add(cube);
+		var cube2 = new THREE.Mesh(box, lineMaterial);
+		cube2.translateX(-32);
+		cube2.translateY(-38);
+		cube2.translateZ(0);
+
+		scene.add(cube2);
+
+		var cannon = new THREE.Mesh(box, lineMaterial);
+		cannon.translateX(0);
+		cannon.translateY(-30);
+		cannon.translateZ(0);		
+		scene.add(cannon);
+
+		document.onkeydown = function(e){
+			//up
+			if (e.keyCode === 38){
+				cannon.position.y += 1;
+			}
+			//left
+			if (e.keyCode === 37){
+				cannon.position.x -= 1;
+			}
+			//right
+			if (e.keyCode === 39){
+				cannon.position.x += 1;
+			}
+			if (e.keyCode === 40){
+				cannon .position.y -= 1;
+			}
+		}
+
+
+		//enemy 1
+		const a = new THREE.Vector2(0, 20);
+
+		const b = new THREE.Vector2(0 + 1.25, 20);
+
+		const c = new THREE.Vector2(0 + 2.5, 17.5);
+
+		const d = new THREE.Vector2(0 - 1.25, 15);
+
+		const e = new THREE.Vector2(0, 15)
+
+		const f = new THREE.Vector2(0 - 2.5, 17.5)
+
+		var emy1 = new THREE.Shape([a, b, c, d, e, f]);
+		//enemy 2
+		var emy2 = new THREE.Shape([a, b , d]);
+
+		const enemies = [];
+		var num = 4;
+
+		var waves = 10;
+
+		//random the enemy type
+		function randomEnemy(){
+			if (Math.random() > 0.5){
+				return emy1;
+			}
+			else{
+				return emy2;
+			}
+		}
+
+		function generateEnemies() {
+			setTimeout(function () {
+				for (var i = -num; i <= num; i++) {
+					const emyMesh = new THREE.Mesh(new THREE.ShapeGeometry(randomEnemy()), new THREE.MeshBasicMaterial({ color: 0x00ff00 }));
+					emyMesh.translateX(i * 8);
+					enemies.push(emyMesh);
+					scene.add(emyMesh);
+
+				}
+
+				waves--;
+				if (waves > 0) {
+					generateEnemies();
+				}
+			}, 1000)
+		}
+
+
+		generateEnemies();
+		renderer.setAnimationLoop(function () {
+			for (var i = 0; i < enemies.length; i++) {
+				if (enemies[i].position.y > -50) {
+					enemies[i].position.y -= 0.1;
+				}
+				else {
+					scene.remove(enemies[i]);// when the "enemy" reach the line, erase it
+					document.getElementById("credit").textContent -= 1;
+					if (document.getElementById("credit").textContent <=0){
+						renderer.setAnimationLoop(null);
+						document.getElementById("instruction").textContent = "GAME OVER";
+					}
+				}
+			}
+			renderer.render(scene, camera);
+		});
+
+
+
+		renderer.render(scene, camera);
+		}
+		
+
+	</script>
+
+</body>
+
+</html>
