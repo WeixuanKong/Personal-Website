@@ -1,17 +1,34 @@
 
 #contact{
     display: block;
-    border:1px solid black;
-    width: 60%;
-    height: 50%;
-    margin-right: 20%;
+    float: bottom;
+    align-content: center;
     text-align: center;
+    border:1px solid black;
+    height: 50%;
     line-height: 1.5;
+    width: 100%;
+    position: relative;
 }
-#contact div{
-    padding: 30%;
-}
+
 /*make the span part such as "Mail:" grey*/
 span{
     color: grey;
+}
+
+.messageBox{
+    width: 100%;
+    height: 500px;
+    position: relative;
+    display: block;
+    float: bottom;
+    border:1px solid black;
+
+    margin-bottom: 20%;
+
+}
+
+#input{
+    width: 100%;
+    float: bottom;
 }

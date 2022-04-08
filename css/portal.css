@@ -1,15 +1,18 @@
 .portal{
     position: relative;
-
+    float:left;
+    align-content: flex-end;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 .portal a{
-    background-color: black; /* Black background */
+    text-align: right;
+    font-size: 1vh;
     color: white; /* White text */
-    padding: 1% 2% 2% 1%; /* Some padding */
+    padding: 1%; /* Some padding */
     cursor: pointer; /* Pointer/hand icon */
-    height: 10%;
-    width: 15%; /* Set a width */
-    display: block; /* Make the buttons appear below each other */
+    height: 3%;
 }
 .portal a:not(:last-child) {
     border-bottom: none; /* Prevent double borders */

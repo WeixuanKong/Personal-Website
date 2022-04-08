@@ -197,7 +197,7 @@ window.onload = function() {
     let rotation = new THREE.Vector3();
     //this is the ray caster for horizontal
     let horizontalRaycaster = new THREE.Raycaster(new THREE.Vector3(), new THREE.Vector3(), 20, 50);
-    let oldTime = performance.now();//set the time and clock to get delta time
+    let oldTime = performance.now();//set the time and index to get delta time
     let clock = new THREE.Clock(true);
     //the move method includes both move by arrow key and collision detection part
     function move(speed) {//update: add the delta time

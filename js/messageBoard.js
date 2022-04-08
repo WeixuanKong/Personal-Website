@@ -12,11 +12,15 @@ window.onload = function () {
             time.innerHTML = myDate.toLocaleString();
             messageBox.appendChild(time);
 
-            let oMessageContent = document.createElement("div");
-            oMessageContent.className = "message_content";
-            oMessageContent.innerHTML = input.value;
+            let messages = document.createElement("div");
+            messages.className = "message_content";
+            messages.innerHTML = input.value;
+            messageBox.appendChild(messages);
+
+
+
             input.value = "";
-            messageBox.appendChild(oMessageContent);
+
         }
 
     }

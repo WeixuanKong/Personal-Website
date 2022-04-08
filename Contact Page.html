@@ -6,14 +6,16 @@
     <!--libs from CDN-->
     <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
     <!--Custom js -->
-    <script type="text/javascript" src="js/clock.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/background.js"></script>
     <script type="text/javascript" src="js/messageBoard.js"></script>
     <!--external lib from CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!--Custom css-->
     <link href="css/portal.css" rel="stylesheet">
-    <link href="css/body.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/contact.css" rel="stylesheet">
     <link href="css/aside.css" rel="stylesheet">
 
 </head>
@@ -34,14 +36,15 @@
     <a href="Projects.html">Next Page</a>
 </div>
 <br>
+<br>
 <div class = "container">
-    <div class="content">
-        <div class="title">Message Board</div>
-
-        <div class="messageBox" id="messageBox"></div>
-
-        <div><input id="input" type="text" placeholder="Enter something"><button id="post">Submit</button></div>
+    <span>Message Board</span>
+    <div class="messageBox">
+        <div id="messageBox"></div>
     </div>
+    <br>
+    <label for="input"></label>
+    <input id="input" type="text" placeholder="Enter something"><button id="post">Submit</button>
     <br>
     <aside>
         <address id="contact">
@@ -57,6 +60,7 @@
         </address>
     </aside>
 </div>
+
 
 
 
