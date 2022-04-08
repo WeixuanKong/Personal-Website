@@ -1,8 +1,6 @@
 
-
 #contact{
-    position:absolute;
-    top:30%;
+    display: block;
     border:1px solid black;
     width: 60%;
     height: 50%;

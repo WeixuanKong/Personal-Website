@@ -1,17 +1,19 @@
 .portal{
     position: relative;
+
 }
 .portal a{
     background-color: black; /* Black background */
     color: white; /* White text */
-    padding: 1% 2% 2% 5%; /* Some padding */
+    padding: 1% 2% 2% 1%; /* Some padding */
     cursor: pointer; /* Pointer/hand icon */
-    width: 30%; /* Set a width */
+    height: 10%;
+    width: 15%; /* Set a width */
     display: block; /* Make the buttons appear below each other */
 }
 .portal a:not(:last-child) {
     border-bottom: none; /* Prevent double borders */
-    margin-bottom: 5%;
+    margin-bottom: 1%;
 }
 .portal a:hover {
     background-color: lightslategrey;

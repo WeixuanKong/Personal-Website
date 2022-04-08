@@ -1,0 +1,15 @@
+/*set the img and make its border red when hover to guide the visitor to click */
+#portrait img{
+    border: 1px solid black;
+    position: relative;
+    width: 20%;
+    margin: auto;
+    text-align: right;
+    float: right;
+}
+#portrait img:hover{
+    border-color: red;
+    transform: scale(1.1);
+    transition-duration: 300ms;
+    cursor: pointer;
+}
