@@ -6,8 +6,8 @@
     <!--libs from CDN-->
     <script src="http://code.jquery.com/jquery-3.1.0.min.js"></script>
     <!--Custom js -->
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript" src="js/background.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/background.js"></script>
     <!--external lib from CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
           integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
@@ -21,7 +21,7 @@
 
 </head>
 <body>
-
+<time id="time" datetime="2013-04-06T13:53">now</time>
 <h1>
     Weixuan Kong
 </h1>
@@ -36,8 +36,12 @@
         <br>
         <span>Gender:</span>Male
     </div>
-    <?php include "./php/gallery.php" ?>
-    <div class="hobby" id="Interests"></div>
+    <div class="hobby" id="Interests">
+        Aquarium
+        <br>
+        <br>
+        <a target="_blank" href="php/gallery.php">Gallery</a>
+    </div>
 </div>
 </body>
 </html>
